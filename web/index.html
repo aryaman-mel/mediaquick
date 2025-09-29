@@ -1,14 +1,15 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8">
   <title>MediQuick</title>
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
   <h1>MediQuick</h1>
   <p class="warn">Not a diagnosis. For emergencies, call local services.</p>
 
+  <!-- Symptom checker -->
   <section>
     <label>Enter symptoms (comma separated):</label>
     <input id="symptoms" placeholder="fever, cough, fatigue" />
@@ -16,9 +17,35 @@
     <pre id="predOut"></pre>
   </section>
 
+  <!-- Nearby clinics -->
   <section>
     <label>Near (lat,lng):</label>
     <input id="lat" value="-37.8136"/>
     <input id="lng" value="144.9631"/>
     <button onclick="nearby()">Find Clinics</button>
-    <pre id="near
+    <pre id="near"></pre>
+  </section>
+
+  <script>
+    async function predict() {
+      const symptoms = document.getElementById("symptoms").value.split(",");
+      const response = await fetch("/interactions", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ medicines: symptoms })
+      });
+      const data = await response.json();
+      document.getElementById("predOut").textContent =
+          JSON.stringify(data, null, 2);
+    }
+
+    async function nearby() {
+      const lat = document.getElementById("lat").value;
+      const lng = document.getElementById("lng").value;
+      // demo output – replace with real API if desired
+      document.getElementById("near").textContent =
+          `Pretend clinic list for ${lat}, ${lng}`;
+    }
+  </script>
+</body>
+</html>

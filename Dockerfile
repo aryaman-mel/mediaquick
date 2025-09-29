@@ -1,9 +1,11 @@
+# Dockerfile
 FROM python:3.11-slim
+
 WORKDIR /app
-COPY requirements.txt .
+COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r requirements.txt
-COPY app ./app
-COPY web ./web
-COPY app/model_rf.joblib app/symptom_binarizer.joblib ./app/
-EXPOSE 8000
-CMD ["uvicorn", "app.api:app", "--host", "0.0.0.0", "--port", "8000"]
+
+COPY . /app
+EXPOSE 5000
+# use a production server:
+CMD ["gunicorn", "-b", "0.0.0.0:5000", "app:app"]

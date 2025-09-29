@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template_string, send_from_directory
 import json, os
 
-app = Flask(__name__, static_folder="web", template_folder="web")
+app = Flask(__name__, static_folder="web", static_url_path="",  template_folder="web")
 
 @app.route("/")
 def index():
@@ -15,7 +15,7 @@ def interactions():
     # Sample hard-coded interactions
     interactions_db = {
         ("aspirin", "ibuprofen"): "May increase risk of bleeding.",
-        ("warfarin", "vitamin k"): "Vitamin K may reduce warfarin’s effect."
+        ("warfarin", "vitamin k"): "Vitamin K may reduce warfarins effect."
     }
 
     found = []

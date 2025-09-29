@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    DOCKER_IMAGE = 'docker.io/<your-dockerhub-username>/mediquick'
+    DOCKER_IMAGE = 'docker.io/aryaman124/mediquick'
   }
   options { timestamps() }
 
